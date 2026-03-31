@@ -12,7 +12,12 @@ interface BlogPost {
 let posts: BlogPost[] = [];
 
 try {
-  const res = await fetch('https://misterekole.substack.com/feed');
+  const res = await fetch('https://misterekole.substack.com/feed', {
+    headers: {
+      'User-Agent': 'Mozilla/5.0 (compatible; mrekole.fr/1.0)',
+      'Accept': 'application/rss+xml, application/xml, text/xml',
+    },
+  });
   if (res.ok) {
     const xml = await res.text();
     const parser = new XMLParser({
@@ -40,7 +45,7 @@ try {
     });
   }
 } catch (e) {
-  // Graceful fallback
+  console.error('Failed to fetch Substack RSS:', e);
 }
 ---
 
