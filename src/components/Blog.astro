@@ -1,6 +1,7 @@
 ---
 import BlogCard from './BlogCard.astro';
 import { XMLParser } from 'fast-xml-parser';
+import cachedPosts from '../data/substack-cache.json';
 
 interface BlogPost {
   title: string;
@@ -29,7 +30,6 @@ try {
     const itemList = Array.isArray(items) ? items : [items];
 
     posts = itemList.slice(0, 6).map((item: any) => {
-      // Strip HTML tags for excerpt
       const desc = (item.description || item['content:encoded'] || '')
         .replace(/<[^>]*>/g, '')
         .replace(/&nbsp;/g, ' ')
@@ -45,7 +45,12 @@ try {
     });
   }
 } catch (e) {
-  console.error('Failed to fetch Substack RSS:', e);
+  // Live fetch failed
+}
+
+// Fallback to cached articles if live fetch failed
+if (posts.length === 0) {
+  posts = cachedPosts as BlogPost[];
 }
 ---
 
