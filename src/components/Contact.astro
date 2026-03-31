@@ -1,0 +1,150 @@
+---
+import SocialLinks from './SocialLinks.astro';
+---
+
+<section class="contact section" id="contact">
+  <div class="container">
+    <div class="contact__inner">
+      <div data-animate>
+        <p class="section-label mono">Contact</p>
+        <h2 class="section-title">Let's connect</h2>
+        <p class="section-subtitle">
+          Open to opportunities in robotics, computer vision, and systems engineering.
+          Feel free to reach out.
+        </p>
+      </div>
+
+      <div class="contact__content" data-animate data-animate-delay="1">
+        <div class="contact__email-card">
+          <div class="contact__email-label">Email</div>
+          <button class="contact__email-btn" id="copy-email" data-email="mittrandekole@gmail.com">
+            <span class="contact__email-text">mittrandekole@gmail.com</span>
+            <span class="contact__copy-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+            </span>
+            <span class="contact__copied-text">Copied!</span>
+          </button>
+        </div>
+
+        <div class="contact__socials">
+          <div class="contact__socials-label">Find me online</div>
+          <SocialLinks />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const btn = document.getElementById('copy-email') as HTMLButtonElement;
+  if (btn) {
+    btn.addEventListener('click', async () => {
+      const email = btn.dataset.email || '';
+      try {
+        await navigator.clipboard.writeText(email);
+        btn.classList.add('contact__email-btn--copied');
+        setTimeout(() => btn.classList.remove('contact__email-btn--copied'), 2000);
+      } catch {
+        // Fallback
+        const input = document.createElement('input');
+        input.value = email;
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand('copy');
+        document.body.removeChild(input);
+        btn.classList.add('contact__email-btn--copied');
+        setTimeout(() => btn.classList.remove('contact__email-btn--copied'), 2000);
+      }
+    });
+  }
+</script>
+
+<style>
+  .section-label {
+    font-size: 0.875rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: var(--space-sm);
+    font-weight: 500;
+  }
+
+  .contact__inner {
+    max-width: 640px;
+  }
+
+  .contact__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xl);
+  }
+
+  .contact__email-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .contact__email-label,
+  .contact__socials-label {
+    font-size: 0.8125rem;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+  }
+
+  .contact__email-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-md) var(--space-lg);
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: 1.125rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--duration-fast) var(--ease-out);
+    position: relative;
+    width: fit-content;
+  }
+
+  .contact__email-btn:hover {
+    border-color: var(--accent);
+    background: var(--accent-glow);
+  }
+
+  .contact__copy-icon {
+    color: var(--text-tertiary);
+    transition: opacity var(--duration-fast);
+  }
+
+  .contact__copied-text {
+    position: absolute;
+    right: var(--space-lg);
+    font-size: 0.8125rem;
+    color: var(--success);
+    font-weight: 500;
+    opacity: 0;
+    transition: opacity var(--duration-fast);
+  }
+
+  .contact__email-btn--copied .contact__copy-icon {
+    opacity: 0;
+  }
+
+  .contact__email-btn--copied .contact__copied-text {
+    opacity: 1;
+  }
+
+  .contact__socials {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+</style>

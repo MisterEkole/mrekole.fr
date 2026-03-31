@@ -1,0 +1,64 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Mitterand Ekole — Robotics & Computer Vision Engineer',
+  description = 'Portfolio of Mitterand Sani Ekole, a Robotics & Computer Vision Software Engineer specializing in VIO, SLAM, sensor fusion, and GPU-accelerated vision systems.',
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, 'https://mrekole.fr');
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="author" content="Mitterand Sani Ekole" />
+    <link rel="canonical" href={canonicalURL.href} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL.href} />
+    <meta property="og:site_name" content="Mitterand Ekole" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@imekole" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <title>{title}</title>
+
+    <!-- Inline critical theme script to prevent flash -->
+    <script is:inline>
+      (function () {
+        const theme = localStorage.getItem('theme') || 'auto';
+        if (theme !== 'auto') {
+          document.documentElement.setAttribute('data-theme', theme);
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <slot />
+    <script src="../scripts/animate.ts"></script>
+    <script src="../scripts/navbar.ts"></script>
+    <script src="../scripts/theme.ts"></script>
+  </body>
+</html>
+
+<style is:global>
+  @import '../styles/typography.css';
+  @import '../styles/animations.css';
+  @import '../styles/global.css';
+</style>

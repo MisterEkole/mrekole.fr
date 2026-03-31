@@ -1,0 +1,85 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="footer__inner container">
+    <div class="footer__left">
+      <span class="footer__copyright">
+        &copy; {currentYear} Mitterrand Ekole
+      </span>
+      <span class="footer__sep">&middot;</span>
+      <span class="footer__built mono">
+        Built with <a href="https://astro.build" target="_blank" rel="noopener noreferrer">Astro</a>
+      </span>
+    </div>
+
+    <button class="footer__top" id="back-to-top" aria-label="Back to top">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="19" x2="12" y2="5"/>
+        <polyline points="5 12 12 5 19 12"/>
+      </svg>
+    </button>
+  </div>
+</footer>
+
+<script>
+  const topBtn = document.getElementById('back-to-top');
+  if (topBtn) {
+    topBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+</script>
+
+<style>
+  .footer {
+    padding: var(--space-xl) 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer__left {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: 0.8125rem;
+    color: var(--text-tertiary);
+  }
+
+  .footer__sep {
+    color: var(--border);
+  }
+
+  .footer__built a {
+    color: var(--text-tertiary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .footer__built a:hover {
+    color: var(--accent);
+  }
+
+  .footer__top {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    color: var(--text-tertiary);
+    transition: color var(--duration-fast) var(--ease-out),
+      background-color var(--duration-fast) var(--ease-out);
+  }
+
+  .footer__top:hover {
+    color: var(--text-primary);
+    background: var(--bg-tertiary);
+  }
+</style>

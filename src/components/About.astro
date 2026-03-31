@@ -1,0 +1,167 @@
+---
+import TechStack from './TechStack.astro';
+---
+
+<section class="about section" id="about">
+  <div class="container">
+    <div data-animate>
+      <p class="section-label mono">About</p>
+      <h2 class="section-title">Engineering perception systems</h2>
+      <p class="section-subtitle">
+        Building software that helps machines see and navigate the physical world.
+      </p>
+    </div>
+
+    <div class="about__grid">
+      <div class="about__bio" data-animate data-animate-delay="1">
+        <p>
+          Robotics software engineer with <strong>5+ years of experience</strong> building
+          GPU-accelerated vision pipelines, real-time inspection systems, and
+          open-source computer vision libraries. Currently based in Madrid.
+        </p>
+      </div>
+
+      <div class="about__details" data-animate data-animate-delay="2">
+        <div class="about__card">
+          <h4 class="about__card-title">Education</h4>
+          <div class="about__card-item">
+            <span class="about__card-label">M.Sc. Mechatronics & Robotics</span>
+            <span class="about__card-meta">SUPMICROTECH-ENSMM, Besan&ccedil;on, France</span>
+          </div>
+          <div class="about__card-item">
+            <span class="about__card-label">B.Tech Mechanical (Mechatronics)</span>
+            <span class="about__card-meta">University of Buea, Cameroon</span>
+          </div>
+          <div class="about__card-item">
+            <span class="about__card-label">AI Product Manager Nanodegree</span>
+            <span class="about__card-meta">Udacity, 2025</span>
+          </div>
+        </div>
+
+        <div class="about__card">
+          <h4 class="about__card-title">Languages</h4>
+          <div class="about__languages">
+            <div class="about__lang">
+              <span>English</span>
+              <span class="about__lang-level">Native</span>
+            </div>
+            <div class="about__lang">
+              <span>French</span>
+              <span class="about__lang-level">Native</span>
+            </div>
+            <div class="about__lang">
+              <span>Spanish</span>
+              <span class="about__lang-level">B1</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <TechStack />
+  </div>
+</section>
+
+<style>
+  .section-label {
+    font-size: 0.875rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: var(--space-sm);
+    font-weight: 500;
+  }
+
+  .about__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3xl);
+    margin-bottom: var(--space-4xl);
+  }
+
+  .about__bio {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .about__bio p {
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
+
+  .about__bio strong {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  .about__details {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+  }
+
+  .about__card {
+    padding: var(--space-xl);
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--card-shadow);
+  }
+
+  .about__card-title {
+    margin-bottom: var(--space-lg);
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-tertiary);
+  }
+
+  .about__card-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: var(--space-sm) 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .about__card-item:last-child {
+    border-bottom: none;
+  }
+
+  .about__card-label {
+    font-weight: 600;
+    font-size: 0.9375rem;
+  }
+
+  .about__card-meta {
+    font-size: 0.8125rem;
+    color: var(--text-tertiary);
+  }
+
+  .about__languages {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .about__lang {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-xs) 0;
+  }
+
+  .about__lang-level {
+    font-size: 0.8125rem;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  @media (max-width: 768px) {
+    .about__grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+    }
+  }
+</style>

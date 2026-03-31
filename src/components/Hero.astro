@@ -1,0 +1,182 @@
+---
+
+---
+
+<section class="hero" id="hero">
+  <div class="hero__bg">
+    <div class="hero__gradient"></div>
+    <div class="hero__grid"></div>
+  </div>
+
+  <div class="hero__content container">
+    <div class="hero__badge" style="animation: fadeUp 0.6s var(--ease-out) 0.1s both">
+      <span class="hero__status"></span>
+      Based in Madrid, Spain
+    </div>
+
+    <h1 class="hero__name" style="animation: fadeUp 0.6s var(--ease-out) 0.2s both">
+      Mitterrand<br />
+      <span class="text-gradient">Ekole</span>
+    </h1>
+
+    <p class="hero__title" style="animation: fadeUp 0.6s var(--ease-out) 0.35s both">
+      Robotics & Computer Vision Software Engineer
+    </p>
+
+    <p class="hero__tagline mono" style="animation: fadeUp 0.6s var(--ease-out) 0.5s both">
+      "Doing gradient ascent on the loss landscape of life"
+    </p>
+
+    <div class="hero__actions" style="animation: fadeUp 0.6s var(--ease-out) 0.65s both">
+      <a href="#projects" class="hero__btn hero__btn--primary">
+        View Projects
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="7" y1="17" x2="17" y2="7"/>
+          <polyline points="7 7 17 7 17 17"/>
+        </svg>
+      </a>
+      <a href="#contact" class="hero__btn hero__btn--secondary">
+        Get in Touch
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding-top: var(--nav-height);
+  }
+
+  .hero__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero__gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% 40%, var(--accent-glow) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 80% 60%, rgba(109, 40, 217, 0.08) 0%, transparent 70%);
+    animation: meshGradient 15s ease-in-out infinite;
+    background-size: 200% 200%;
+  }
+
+  .hero__grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 60px 60px;
+    opacity: 0.3;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 30%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 30%, transparent 70%);
+  }
+
+  .hero__content {
+    position: relative;
+    z-index: 1;
+    padding: var(--space-4xl) 0;
+  }
+
+  .hero__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-xs) var(--space-md);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-xl);
+  }
+
+  .hero__status {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--success);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  .hero__name {
+    margin-bottom: var(--space-lg);
+  }
+
+  .hero__title {
+    font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+    color: var(--text-secondary);
+    font-weight: 400;
+    margin-bottom: var(--space-md);
+  }
+
+  .hero__tagline {
+    font-size: clamp(0.875rem, 1.5vw, 1rem);
+    color: var(--text-tertiary);
+    font-style: italic;
+    margin-bottom: var(--space-3xl);
+  }
+
+  .hero__actions {
+    display: flex;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+
+  .hero__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-md);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all var(--duration-fast) var(--ease-out);
+  }
+
+  .hero__btn:active {
+    transform: scale(0.97);
+  }
+
+  .hero__btn--primary {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  .hero__btn--primary:hover {
+    background: var(--accent-hover);
+    color: #fff;
+    box-shadow: 0 4px 16px var(--accent-glow);
+  }
+
+  .hero__btn--secondary {
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    background: var(--bg-secondary);
+  }
+
+  .hero__btn--secondary:hover {
+    border-color: var(--border-hover);
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+  }
+
+  @media (max-width: 480px) {
+    .hero__actions {
+      flex-direction: column;
+    }
+
+    .hero__btn {
+      justify-content: center;
+    }
+  }
+</style>

@@ -1,0 +1,65 @@
+---
+import { techStack } from '../data/tech-stack';
+---
+
+<div class="tech-stack" data-animate>
+  <h3 class="tech-stack__title">Tech Stack</h3>
+  <div class="tech-stack__grid">
+    {techStack.map((category, catIdx) => (
+      <div class="tech-stack__category" data-animate data-animate-delay={String(Math.min(catIdx + 1, 5))}>
+        <h4 class="tech-stack__category-name mono">{category.name}</h4>
+        <div class="tech-stack__tags">
+          {category.items.map((item) => (
+            <span class="tech-stack__tag">{item}</span>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .tech-stack__title {
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-tertiary);
+    margin-bottom: var(--space-xl);
+  }
+
+  .tech-stack__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-xl);
+  }
+
+  .tech-stack__category-name {
+    font-size: 0.8125rem;
+    color: var(--accent);
+    margin-bottom: var(--space-sm);
+    font-weight: 500;
+  }
+
+  .tech-stack__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+
+  .tech-stack__tag {
+    display: inline-block;
+    padding: 4px 12px;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    border-radius: 100px;
+    font-size: 0.8125rem;
+    border: 1px solid var(--border);
+    transition: border-color var(--duration-fast) var(--ease-out),
+      color var(--duration-fast) var(--ease-out);
+  }
+
+  .tech-stack__tag:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+</style>

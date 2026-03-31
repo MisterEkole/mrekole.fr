@@ -1,0 +1,177 @@
+---
+import FeaturedProject from './FeaturedProject.astro';
+import ProjectCard from './ProjectCard.astro';
+import { featuredProjects } from '../data/featured-projects';
+
+// Fetch GitHub repos at build time
+let recentRepos: any[] = [];
+try {
+  const res = await fetch(
+    'https://api.github.com/users/MisterEkole/repos?sort=updated&per_page=15',
+    {
+      headers: {
+        Accept: 'application/vnd.github.v3+json',
+        ...(import.meta.env.GITHUB_TOKEN
+          ? { Authorization: `token ${import.meta.env.GITHUB_TOKEN}` }
+          : {}),
+      },
+    }
+  );
+  if (res.ok) {
+    const repos = await res.json();
+    const featuredNames = new Set(featuredProjects.map((p) => p.name));
+    recentRepos = repos
+      .filter((r: any) => !r.fork && !featuredNames.has(r.name))
+      .slice(0, 6);
+  }
+} catch (e) {
+  // Graceful fallback: just show featured projects
+}
+
+// Fetch live stats for featured projects
+const featuredWithStats = await Promise.all(
+  featuredProjects.map(async (project) => {
+    try {
+      const res = await fetch(`https://api.github.com/repos/${project.repo}`, {
+        headers: {
+          Accept: 'application/vnd.github.v3+json',
+          ...(import.meta.env.GITHUB_TOKEN
+            ? { Authorization: `token ${import.meta.env.GITHUB_TOKEN}` }
+            : {}),
+        },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        return { ...project, stars: data.stargazers_count, language: data.language };
+      }
+    } catch {}
+    return { ...project, stars: 0, language: null };
+  })
+);
+---
+
+<section class="projects section" id="projects">
+  <div class="container">
+    <div data-animate>
+      <p class="section-label mono">Projects</p>
+      <h2 class="section-title">Things I've built</h2>
+      <p class="section-subtitle">
+        From GPU-accelerated vision pipelines to AI-powered theorem provers.
+      </p>
+    </div>
+
+    <div class="projects__featured">
+      {featuredWithStats.map((project, idx) => (
+        <div data-animate data-animate-delay={String(Math.min(idx + 1, 5))}>
+          <FeaturedProject
+            name={project.name}
+            repo={project.repo}
+            description={project.description}
+            techStack={project.techStack}
+            highlights={project.highlights}
+            stars={project.stars}
+            language={project.language}
+          />
+        </div>
+      ))}
+    </div>
+
+    {recentRepos.length > 0 && (
+      <div class="projects__recent" data-animate>
+        <h3 class="projects__recent-title">Recent Activity</h3>
+        <div class="projects__recent-grid">
+          {recentRepos.map((repo: any) => (
+            <ProjectCard
+              name={repo.name}
+              description={repo.description || ''}
+              url={repo.html_url}
+              stars={repo.stargazers_count}
+              language={repo.language}
+              updatedAt={repo.updated_at}
+            />
+          ))}
+        </div>
+      </div>
+    )}
+
+    <div class="projects__cta" data-animate>
+      <a
+        href="https://github.com/MisterEkole"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="projects__github-link"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+        </svg>
+        View all projects on GitHub
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-label {
+    font-size: 0.875rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: var(--space-sm);
+    font-weight: 500;
+  }
+
+  .projects__featured {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: var(--space-xl);
+    margin-bottom: var(--space-4xl);
+  }
+
+  .projects__recent {
+    margin-bottom: var(--space-3xl);
+  }
+
+  .projects__recent-title {
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-tertiary);
+    margin-bottom: var(--space-xl);
+  }
+
+  .projects__recent-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-md);
+  }
+
+  .projects__cta {
+    text-align: center;
+  }
+
+  .projects__github-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: 0.75rem 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-size: 0.9375rem;
+    text-decoration: none;
+    transition: all var(--duration-fast) var(--ease-out);
+  }
+
+  .projects__github-link:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-glow);
+  }
+
+  @media (max-width: 480px) {
+    .projects__featured {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
